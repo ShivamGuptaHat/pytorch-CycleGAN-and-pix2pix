@@ -31,8 +31,9 @@ class SingleDataset(BaseDataset):
             A_paths(str) - - the path of the image
         """
         A_path = self.A_paths[index]
-        A_img = Image.open(A_path).convert('RGB')
-        A = self.transform(A_img)
+        A_img = np.load(A_path)
+        A_img = np.expand_dims(A_img, axis=0)
+        A = torch.from_numpy(A_img)
         return {'A': A, 'A_paths': A_path}
 
     def __len__(self):
